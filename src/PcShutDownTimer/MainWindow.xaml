@@ -1,0 +1,32 @@
+﻿<Window x:Class="PcShutdownTimer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        xmlns:resx="clr-namespace:PcShutdownTimer.Properties"
+        xmlns:pcShutdownTimer="clr-namespace:PcShutdownTimer"
+        Title="{x:Static resx:Resources.MainWindow_Title}" Height="200" Width="425" ResizeMode="NoResize">
+    <Window.DataContext>
+        <pcShutdownTimer:AppViewModel />
+    </Window.DataContext>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding ClosingCommand}" CommandParameter="{Binding}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Viewbox Stretch="Uniform">
+            <TextBlock Text="{Binding Remaining, StringFormat={}{0:mm}:{0:ss}:{0:ff}, FallbackValue=00:00}" FontFamily="Verdana"  />
+        </Viewbox>
+        <Button Content="{x:Static resx:Resources.CancelButton_Text}" Command="{Binding CloseCommand}"  Grid.Row="1" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle1}" Margin="0,0,5,5" Height="30" Width="60" />
+    </Grid>
+</Window>

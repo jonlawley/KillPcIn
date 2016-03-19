@@ -11,6 +11,9 @@
     <Window.DataContext>
         <pcShutdownTimer:AppViewModel />
     </Window.DataContext>
+    <Window.Resources>
+        <pcShutdownTimer:TimeDisplayConverter x:Key="TimeDisplayConverter" />
+    </Window.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding ClosingCommand}" CommandParameter="{Binding}" />
@@ -25,7 +28,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Viewbox Stretch="Uniform">
-            <TextBlock Text="{Binding Remaining, StringFormat={}{0:mm}:{0:ss}:{0:ff}, FallbackValue=00:00}" FontFamily="Verdana"  />
+            <TextBlock Text="{Binding Remaining, Converter={StaticResource TimeDisplayConverter}}" FontFamily="Verdana" />
         </Viewbox>
         <Button Content="{x:Static resx:Resources.CancelButton_Text}" Command="{Binding CloseCommand}"  Grid.Row="1" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle1}" Margin="0,0,5,5" Height="30" Width="60" />
     </Grid>
